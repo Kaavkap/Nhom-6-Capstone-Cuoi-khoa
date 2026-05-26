@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "Trang chủ",
+    "courses": "Khoá học",
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "search": "Tìm kiếm khoá học...",
+    "signIn": "Đăng nhập",
+    "joinNow": "Tham gia ngay",
+    "profile": "Trang cá nhân",
+    "myCourses": "Khoá học của tôi",
+    "dashboard": "Bảng điều khiển",
+    "logout": "Đăng xuất"
+  },
+  "hero": {
+    "subtitle": "Khoá học trực tuyến tốt nhất",
+    "title": "Nền tảng học trực tuyến hàng đầu",
+    "description": "Vebicula ipsum a arcu cursus vitae. Mauris vitae ultricies leo integer malesuada nunc vel risus commodo viverra maecenas.",
+    "explore": "Khám phá khoá học",
+    "join": "Tham gia ngay",
+    "readMore": "Xem thêm"
+  },
+  "courseDetail": {
+    "home": "TRANG CHỦ",
+    "courses": "KHOÁ HỌC",
+    "studentsEnrolled": "Học viên",
+    "createdBy": "TẠO BỞI",
+    "overview": "Mô tả",
+    "curriculum": "Nội dung",
+    "free": "MIỄN PHÍ",
+    "enrollNow": "ĐĂNG KÝ NGAY",
+    "lifetime": "Truy cập trọn đời",
+    "lessons": "Bài học",
+    "certificate": "Chứng chỉ",
+    "category": "Danh mục",
+    "enrollSuccess": "Đăng ký thành công!",
+    "enrollFail": "Đăng ký thất bại",
+    "backToCourses": "QUAY LẠI KHOÁ HỌC",
+    "alreadyEnrolled": "ĐÃ ĐĂNG KÝ"
+  },
+  "home": {
+    "courses_subtitle": "Khoá học phổ biến",
+    "courses_title": "Khám phá các khoá học phổ biến nhất",
+    "courses_description": "Làm chủ các công nghệ mới nhất với các khoá học từ chuyên gia. Bắt đầu hành trình của bạn ngay hôm nay.",
+    "viewDetail": "XEM CHI TIẾT",
+    "students": "Học viên",
+    "lessonsCount": "Bài học",
+    "viewAll": "XEM TẤT CẢ KHOÁ HỌC"
+  },
+  "features": {
+    "skilled_instructors": "Giảng viên giỏi",
+    "skilled_instructors_desc": "Học hỏi từ các chuyên gia trong ngành với nhiều năm kinh nghiệm thực tế.",
+    "online_classes": "Lớp học trực tuyến",
+    "online_classes_desc": "Truy cập các lớp học chất lượng cao từ mọi nơi trên thế giới, vào bất kỳ lúc nào.",
+    "home_projects": "Dự án thực tế",
+    "home_projects_desc": "Xây dựng các dự án thực tế giúp bạn làm chủ kỹ năng nhanh hơn.",
+    "book_library": "Thư viện sách",
+    "book_library_desc": "Truy cập không giới hạn vào thư viện tài nguyên học tập kỹ thuật số khổng lồ."
+  },
+  "about": {
+    "title": "Về chúng tôi",
+    "coming_soon": "SẮP RA MẮT",
+    "desc_1": "CyberEdu là nền tảng hàng đầu về đào tạo kỹ thuật tại Việt Nam. Chúng tôi đang cập nhật trang này để mang đến cho bạn trải nghiệm tốt nhất.",
+    "desc_2": "Hãy theo dõi để biết thêm các cập nhật về tầm nhìn, đội ngũ và sứ mệnh của chúng tôi trong việc trao quyền cho thế hệ lập trình viên tiếp theo."
+  },
+  "contact": {
+    "get_in": "Liên",
+    "touch": "hệ",
+    "email_us": "Gửi Email",
+    "visit_us": "Địa chỉ",
+    "send_message": "Gửi tin nhắn",
+    "your_name": "HỌ TÊN",
+    "your_email": "EMAIL",
+    "your_message": "NỘI DUNG",
+    "send_btn": "GỬI TIN NHẮN"
+  }
+}
