@@ -71,7 +71,7 @@ export default function ProfilePage() {
     const handleCancelEnrollment = async (courseId: string) => {
         setIsLoading(true);
         try {
-            const { courseService } = await import('@/services/courseService');
+            const { default: courseService } = await import('@/services/courseService');
             await courseService.cancelEnrollment(courseId, profileData.taiKhoan);
             setMessage({ type: 'success', text: 'Hủy đăng ký khóa học thành công!' });
             await fetchUserProfile(); // Refresh list after cancel
