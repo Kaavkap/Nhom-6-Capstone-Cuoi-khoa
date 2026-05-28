@@ -8,7 +8,6 @@
     "signIn": "Sign In",
     "joinNow": "Join Now",
     "profile": "My Profile",
-    "myCourses": "My Courses",
     "dashboard": "Dashboard",
     "logout": "Logout"
   },
@@ -71,5 +70,23 @@
     "your_email": "YOUR EMAIL",
     "your_message": "YOUR MESSAGE",
     "send_btn": "SEND MESSAGE"
+  },
+  "profile": {
+    "title": "Personal Profile",
+    "accountLabel": "Account",
+    "options": "Account Options",
+    "personalInfo": "Personal Information",
+    "myCourses": "My Courses",
+    "editHeading": "Edit Account Information",
+    "username": "Username (Fixed)",
+    "password": "New Password",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "email": "Email Address",
+    "saveButton": "Update Information",
+    "enrolledHeading": "Enrolled Course Directory",
+    "statusEnrolled": "Enrolled",
+    "noCourses": "You have not enrolled in any courses yet.",
+    "updateSuccess": "ACCOUNT INFORMATION UPDATED SUCCESSFULLY!"
   }
 }

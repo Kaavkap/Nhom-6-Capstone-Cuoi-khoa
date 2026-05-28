@@ -171,10 +171,6 @@ export default function Header() {
                         <UserCircle size={28} className="text-[#06BBCC] group-hover:scale-110 transition-transform" />
                         <span className="text-xl font-black text-gray-800">{t('header.profile')}</span>
                       </Link>
-                      <Link href="/my-courses" className="flex items-center space-x-6 px-8 py-6 hover:bg-[#06BBCC]/10 transition-colors group">
-                        <BookOpen size={28} className="text-[#06BBCC] group-hover:scale-110 transition-transform" />
-                        <span className="text-xl font-black text-gray-800">{t('header.myCourses')}</span>
-                      </Link>
                       <button
                         onClick={handleLogout}
                         className="w-full flex items-center space-x-6 px-8 py-6 hover:bg-red-50 text-red-600 transition-colors border-t-2 border-gray-200 group"

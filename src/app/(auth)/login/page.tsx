@@ -74,7 +74,7 @@ export default function LoginPage() {
         
         <div className="glass-card w-full p-10 sm:p-12">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">
+            <h2 className="text-3xl font-black text-black mb-3 tracking-tighter uppercase">
               Sign In
             </h2>
             <p className="text-gray-500 text-sm">
@@ -114,7 +114,7 @@ export default function LoginPage() {
             <div className="pt-8">
               <Button
                 type="submit"
-                className="w-full py-7 text-base rounded-xl font-bold shadow-lg shadow-[#06BBCC]/20"
+                className="w-full"
                 isLoading={isLoading}
               >
                 Sign In

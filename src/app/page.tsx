@@ -99,8 +99,10 @@ export default function Home() {
             <div className="relative z-10 border-[12px] border-white/10 aspect-video overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop"
+                loading="eager"
                 alt="Learning Platform"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>

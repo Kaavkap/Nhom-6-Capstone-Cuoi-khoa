@@ -21,16 +21,16 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const variants = {
-    primary: 'bg-[#06BBCC] text-white hover:bg-[#05a8b9]',
-    secondary: 'bg-[#FF9F1C] text-white hover:bg-[#e88f19]',
-    outline: 'border border-[#06BBCC] bg-transparent hover:bg-[#06BBCC] hover:text-white text-[#06BBCC]',
-    ghost: 'bg-transparent hover:bg-gray-100 text-gray-700',
+    primary: 'bg-[#06BBCC] text-black border-4 border-black hover:bg-black hover:text-white shadow-none uppercase tracking-widest',
+    secondary: 'bg-[#FF9F1C] text-black border-4 border-black hover:bg-black hover:text-white shadow-none uppercase tracking-widest',
+    outline: 'border-4 border-black bg-transparent hover:bg-black hover:text-white text-black shadow-none uppercase tracking-widest',
+    ghost: 'bg-transparent hover:bg-gray-100 text-black shadow-none uppercase tracking-widest',
   };
 
   return (
     <button
       className={cn(
-        'inline-flex items-center justify-center rounded-none px-6 py-3 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50',
+        'inline-flex items-center justify-center rounded-none px-6 py-4 text-xs font-black transition-all focus-visible:outline-none focus-visible:ring-0 disabled:pointer-events-none disabled:opacity-50 active:translate-x-0.5 active:translate-y-0.5',
         variants[variant],
         className
       )}

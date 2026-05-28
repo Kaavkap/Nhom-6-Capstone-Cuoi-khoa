@@ -1,38 +1,79 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { motion } from 'framer-motion';
-import CourseCard from '@/components/common/CourseCard';
 import courseService from '@/services/courseService';
-import { useTranslation } from 'react-i18next';
-import { useHasMounted } from '@/hooks/useHasMounted';
-import { Course } from '@/types/course';
+import CourseCard from '@/components/common/CourseCard';
 
 export default function CoursesPage() {
-  const { t } = useTranslation();
-  const hasMounted = useHasMounted();
+  return (
+    <Suspense fallback={<div className="text-center py-24 text-xs font-black tracking-widest text-black animate-pulse">LOADING...</div>}>
+      <CoursesPageContent />
+    </Suspense>
+  );
+}
+
+function CoursesPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search')?.toLowerCase() || '';
 
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // Load categories and initial courses catalog
   useEffect(() => {
-    const fetchCourses = async () => {
+    const initData = async () => {
       try {
-        const data = await courseService.getCourseList();
-        setCourses(data);
-      } catch (error) {
-        console.error('Failed to fetch courses:', error);
-      } finally {
-        setIsLoading(false);
+        const catData = await courseService.getCategories();
+        setCategories(catData);
+      } catch (err) {
+        console.error("Error loading categories:", err);
       }
+      await loadAllCourses();
     };
-    fetchCourses();
+    initData();
   }, []);
 
-  if (!hasMounted) return null;
+  const loadAllCourses = async () => {
+    setIsLoading(true);
+    try {
+      const data = await courseService.getCourseList();
+      setCourses(data);
+    } catch (err) {
+      console.error("Error loading all courses:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle Category Filter Selection
+  const handleCategoryClick = async (id: string) => {
+    setActiveCategory(id);
+    setIsLoading(true);
+    try {
+      if (id === 'All') {
+        await loadAllCourses();
+      } else {
+        const data = await courseService.getCoursesByCategory(id);
+
+        const normalizedData = (data || []).map((course: any) => ({
+          ...course,
+          tenKhoaHoc: course.tenKhoaHoc,
+          moTa: course.moTa || "Chưa có mô tả chi tiết cho khóa học này.",
+          hinhAnh: course.hinhAnh
+        }));
+
+        setCourses(normalizedData);
+      }
+    } catch (err) {
+      console.error("Error filtering courses:", err);
+      setCourses([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const filteredCourses = courses.filter((course) => {
     if (!searchQuery) return true;
@@ -42,42 +83,69 @@ export default function CoursesPage() {
     );
   });
 
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="bg-gray-100 animate-pulse h-[450px] rounded-none" />
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div className="py-12 bg-transparent min-h-screen">
-      <div className="container mx-auto px-6 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-6xl font-black text-gray-900 mb-6 uppercase tracking-tighter border-b-8 border-[#06BBCC] inline-block">
-            {t('header.courses', 'All Courses')}
-          </h1>
-          <p className="text-xl text-gray-600 mt-6 max-w-2xl mx-auto font-bold">
-            Explore our professional catalog of industry-leading courses.
-          </p>
-        </motion.div>
-        {filteredCourses.length === 0 ? (
-          <div className="text-center py-10 font-bold text-gray-500">
-            Không tìm thấy khóa học nào phù hợp với "{searchQuery}"
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredCourses.map((course) => (
-              <CourseCard key={course.maKhoaHoc} course={course} />
+    <div className="container mx-auto py-16 px-8 max-w-7xl pt-28">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
+
+        {/* SIDEBAR DANH MỤC KHÓA HỌC */}
+        <div className="lg:col-span-1 bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sticky top-28 z-10">
+          <h3 className="text-sm font-black uppercase tracking-widest text-black mb-6 pb-3 border-b-4 border-black">
+            Danh mục khóa học
+          </h3>
+
+          <div className="flex flex-col gap-4">
+            {/* 'ALL' FILTER OPTION CARD */}
+            <button
+              onClick={() => handleCategoryClick('All')}
+              className={`w-full text-left px-6 py-4 text-xs font-black uppercase tracking-widest border-2 border-black transition-all duration-200 block ${activeCategory === 'All'
+                ? '!bg-black !text-white translate-x-1 translate-y-1 shadow-none'
+                : 'bg-white text-black hover:bg-black hover:text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+                }`}
+            >
+              📚 Tất cả khóa học
+            </button>
+
+            {/* DYNAMIC CATEGORY OPTION CARDS */}
+            {categories.map((cat: any) => (
+              <button
+                key={cat.maDanhMuc}
+                onClick={() => handleCategoryClick(cat.maDanhMuc)}
+                className={`w-full text-left px-6 py-4 text-xs font-black uppercase tracking-widest border-2 border-black transition-all duration-200 block ${activeCategory === cat.maDanhMuc
+                  ? '!bg-black !text-white translate-x-1 translate-y-1 shadow-none'
+                  : 'bg-white text-black hover:bg-black hover:text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+                  }`}
+              >
+                🖥️ {cat.tenDanhMuc}
+              </button>
             ))}
           </div>
-        )}
+        </div>
+
+        {/* RIGHT COLUMN: Main Course Display Catalog Grid */}
+        <div className="lg:col-span-3">
+          {isLoading ? (
+            <div className="text-center py-24 text-xs font-black tracking-widest text-black animate-pulse">
+              LOADING SYSTEM CHANNELS...
+            </div>
+          ) : (
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredCourses.map((course: any) => (
+                  <CourseCard key={course.maKhoaHoc} course={course} />
+                ))}
+              </div>
+
+              {filteredCourses.length === 0 && (
+                <div className="text-center py-24 font-black text-xs uppercase tracking-widest text-gray-400 border-4 border-dashed border-black bg-gray-50">
+                  {searchQuery 
+                    ? `Không tìm thấy khóa học nào phù hợp với "${searchQuery}"`
+                    : 'Không tìm thấy khóa học nào thuộc danh mục này.'}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
       </div>
     </div>
   );

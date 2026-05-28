@@ -44,7 +44,7 @@ export default function CourseDetailPage() {
       await courseService.enrollCourse(course.maKhoaHoc, currentUser.taiKhoan);
       setEnrolled(true);
       toast.success(t('courseDetail.enrollSuccess', 'Enrolled successfully!'), {
-        style: { border: '2px solid #06BBCC', padding: '16px', color: '#333', background: '#fff' },
+        style: { border: '4px solid #000', padding: '16px', color: '#000', background: '#fff', fontWeight: '900' },
         iconTheme: { primary: '#06BBCC', secondary: '#fff' },
       });
     } catch (error: unknown) {
@@ -57,25 +57,47 @@ export default function CourseDetailPage() {
     }
   };
 
+  const handleCancelEnrollment = async () => {
+    if (!currentUser || !course) return;
+    try {
+      setIsEnrolling(true);
+      await courseService.cancelEnrollment(course.maKhoaHoc, currentUser.taiKhoan);
+      setEnrolled(false);
+      toast.success(t('courseDetail.cancelSuccess', 'Canceled enrollment successfully!'), {
+        style: { border: '4px solid #000', padding: '16px', color: '#000', background: '#fff', fontWeight: '900' },
+        iconTheme: { primary: '#e11d48', secondary: '#fff' },
+      });
+    } catch (error: unknown) {
+      const errorMsg =
+        (error as { response?: { data?: string } }).response?.data ||
+        t('courseDetail.cancelFail', 'Failed to cancel enrollment');
+      toast.error(errorMsg);
+    } finally {
+      setIsEnrolling(false);
+    }
+  };
+
   if (!hasMounted) return null;
 
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="w-12 h-12 border-4 border-[#06BBCC] border-t-transparent rounded-none animate-spin" />
+        <div className="w-12 h-12 border-4 border-black border-t-[#06BBCC] rounded-none animate-spin" />
       </div>
     );
 
   if (!course)
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-white space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Course Not Found</h1>
-        <button
-          onClick={() => router.push('/courses')}
-          className="rounded-none px-8 py-3 font-bold text-sm border-2 border-gray-900 bg-transparent text-gray-900 hover:bg-gray-100 transition-colors"
-        >
-          Back to Courses
-        </button>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white px-6">
+        <div className="border-4 border-black p-10 bg-white text-center max-w-md shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <h1 className="text-xl font-black text-gray-900 uppercase tracking-widest mb-4">Course Not Found</h1>
+          <button
+            onClick={() => router.push('/courses')}
+            className="w-full border-4 border-black bg-[#06BBCC] text-black px-6 py-3 font-black text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+          >
+            Back to Courses
+          </button>
+        </div>
       </div>
     );
 
@@ -93,119 +115,80 @@ export default function CourseDetailPage() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-white pt-20"
+      className="bg-white pt-24 min-h-screen"
     >
-      {/* ── Hero Banner ── */}
-      <div className="bg-gradient-to-r from-[#058e9b] to-[#111] text-white py-14 border-b-4 border-[#06BBCC]">
-        <div className="container mx-auto px-6 md:px-12">
-
-          {/* Breadcrumb */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-1.5 text-xs font-semibold text-gray-400 mb-6"
-          >
-            <span
-              className="hover:text-[#06BBCC] cursor-pointer transition-colors"
-              onClick={() => router.push('/')}
-            >
+      {/* ── HERO BANNER ── */}
+      <div className="bg-black text-white py-12 border-b-4 border-black">
+        <div className="container mx-auto px-8 max-w-7xl">
+          <div className="flex flex-wrap items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6">
+            <span className="hover:text-[#06BBCC] cursor-pointer transition-colors" onClick={() => router.push('/')}>
               {t('courseDetail.home', 'HOME')}
             </span>
-            <ChevronRight size={12} />
-            <span
-              className="hover:text-[#06BBCC] cursor-pointer transition-colors"
-              onClick={() => router.push('/courses')}
-            >
+            <ChevronRight size={12} className="text-gray-600" />
+            <span className="hover:text-[#06BBCC] cursor-pointer transition-colors" onClick={() => router.push('/courses')}>
               {t('courseDetail.courses', 'COURSES')}
             </span>
-            <ChevronRight size={12} />
-            <span className="text-[#06BBCC] truncate max-w-[180px]">{course.tenKhoaHoc}</span>
-          </motion.div>
+            <ChevronRight size={12} className="text-gray-600" />
+            <span className="text-[#06BBCC] truncate max-w-[200px]">{course.tenKhoaHoc}</span>
+          </div>
 
-          {/* Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08 }}
-            className="text-2xl md:text-3xl font-bold tracking-tight leading-snug max-w-3xl mb-4"
-          >
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-tight max-w-4xl mb-4">
             {course.tenKhoaHoc}
-          </motion.h1>
+          </h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.12 }}
-            className="text-sm leading-relaxed text-gray-300 max-w-2xl mb-8 font-normal"
-          >
-            {course.moTa || 'Elevate your professional skills with this comprehensive course designed by industry experts.'}
-          </motion.p>
-
-          {/* Meta badges */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.16 }}
-            className="flex flex-wrap items-center gap-x-6 gap-y-3"
-          >
-            <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 mt-6 pt-4 border-t border-gray-800">
+            <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="text-yellow-400 fill-yellow-400" size={14} />
               ))}
-              <span className="font-bold text-sm ml-1">4.9</span>
+              <span className="font-black text-xs ml-2 bg-[#06BBCC] text-black px-1.5 py-0.5">4.9</span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-gray-300">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-300">
               <Users className="text-[#06BBCC]" size={14} />
               <span>{course.soLuongHocVien} {t('courseDetail.studentsEnrolled', 'Students')}</span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-gray-400">
-              <span>{t('courseDetail.createdBy', 'Created by')}</span>
-              <span className="font-semibold text-[#06BBCC]">{course.nguoiTao.hoTen}</span>
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-400">
+              <span>{t('courseDetail.createdBy', 'Created by')} :</span>
+              <span className="font-black text-[#06BBCC]">{course.nguoiTao?.hoTen || 'ADMIN'}</span>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* ── Body ── */}
-      <div className="container mx-auto px-6 md:px-12 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      {/* ── BODY ── */}
+      <div className="container mx-auto px-8 max-w-7xl py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
 
-          {/* ── Left: Main Content ── */}
+          {/* LEFT CONTENT */}
           <div className="lg:col-span-2 space-y-12">
-
-            {/* Description */}
-            <section>
-              <h2 className="text-lg font-bold border-b pb-3 mb-5 text-gray-900 tracking-tight">
+            <section className="bg-white border-4 border-black p-8 md:p-10 shadow-[8px_8px_0px_0px_#06BBCC]">
+              <h2 className="text-sm font-black uppercase tracking-widest border-b-4 border-black pb-3 mb-6 text-black">
                 {t('courseDetail.overview', 'Mô tả khóa học')}
               </h2>
-              <div className="text-sm leading-loose text-gray-600 space-y-4">
-                <p>{course.moTa || 'No description available.'}</p>
+              <div className="text-xs leading-relaxed font-medium text-black space-y-4 whitespace-pre-line">
+                <p>{course.moTa || 'No description available for this course syllabus.'}</p>
               </div>
             </section>
 
-            {/* Curriculum */}
-            <section>
-              <h2 className="text-lg font-bold border-b pb-3 mb-5 text-gray-900 tracking-tight">
+            <section className="bg-white border-4 border-black p-8 md:p-10 shadow-[8px_8px_0px_0px_#06BBCC]">
+              <h2 className="text-sm font-black uppercase tracking-widest border-b-4 border-black pb-3 mb-6 text-black">
                 {t('courseDetail.curriculum', 'Nội dung khóa học')}
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {curriculum.map((lesson, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between py-3.5 px-5 bg-white border border-gray-100 hover:border-[#06BBCC] transition-all cursor-pointer group shadow-[2px_2px_0px_0px_rgba(0,0,0,0.04)] hover:shadow-[4px_4px_0px_0px_rgba(6,187,204,0.08)] mb-1"
+                    className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white border-2 border-black hover:bg-gray-50 transition-all cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-8 h-8 bg-gray-50 flex items-center justify-center text-[#06BBCC] text-xs font-bold group-hover:bg-[#06BBCC] group-hover:text-white transition-all border border-gray-100">
+                      <div className="w-8 h-8 bg-black text-white flex items-center justify-center text-xs font-black shrink-0">
                         {i + 1}
                       </div>
-                      <span className="text-sm font-medium text-gray-800 group-hover:text-[#06BBCC] transition-colors">
-                        {lesson}
-                      </span>
+                      <span className="text-xs font-black uppercase tracking-tight text-black">{lesson}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <PlayCircle className="text-gray-300 group-hover:text-[#06BBCC]" size={18} />
-                      <span className="text-xs font-semibold text-gray-400">15:00</span>
+                    <div className="flex items-center justify-end gap-3 mt-2 sm:mt-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-dashed border-gray-200">
+                      <PlayCircle className="text-black" size={16} />
+                      <span className="text-[11px] font-black tracking-wider text-gray-500">15:00 MINS</span>
                     </div>
                   </div>
                 ))}
@@ -213,117 +196,63 @@ export default function CourseDetailPage() {
             </section>
           </div>
 
-          {/* ── Right: Sticky Sidebar ── */}
+          {/* RIGHT SIDEBAR */}
           <div className="lg:col-span-1">
-            <div className="sticky top-28 space-y-6">
-
-              {/* Card */}
-              <div
-                className="bg-white border-2 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,0.08)] overflow-hidden rounded-none flex flex-col"
-                style={{ minHeight: '580px' }}
-              >
-
-                {/* Thumbnail */}
-                <div className="relative aspect-video group cursor-pointer overflow-hidden border-b-2 border-gray-900">
+            <div className="sticky top-28 space-y-8">
+              <div className="bg-white border-4 border-black shadow-[8px_8px_0px_0px_#06BBCC] flex flex-col">
+                <div className="relative aspect-video border-b-4 border-black bg-gray-100 overflow-hidden">
                   <Image
                     src={course.hinhAnh}
                     alt={course.tenKhoaHoc}
                     fill
                     unoptimized
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src =
-                        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop';
-                    }}
+                    className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="w-14 h-14 bg-white flex items-center justify-center border-2 border-gray-900">
-                      <PlayCircle className="text-[#06BBCC]" size={28} />
-                    </div>
-                  </div>
                 </div>
 
-                {/* CTA */}
-                <div className="p-8 space-y-6 flex flex-col flex-1">
-                  <div className="flex items-center justify-between">
-                    <span className="text-3xl font-black text-gray-900 tracking-tight">
-                      {t('courseDetail.free', 'FREE')}
+                <div className="p-6 md:p-8 space-y-6 flex flex-col justify-between">
+                  <div className="flex items-center justify-between pb-4 border-b-2 border-dashed border-black">
+                    <span className="text-2xl font-black text-black tracking-tighter uppercase">
+                      {t('courseDetail.free', 'FREE ACCESS')}
                     </span>
-                    <span className="text-sm text-gray-400 line-through font-semibold">$199.99</span>
+                    <span className="text-xs text-gray-400 line-through font-bold">$199.99</span>
                   </div>
 
+                  {/* FIXED ENROLL BUTTON (Invisible text bug completely fixed via text-black) */}
                   <button
-                    onClick={handleEnroll}
-                    disabled={isEnrolling || enrolled}
-                    style={{
-                      width: '100%',
-                      padding: '18px 24px',
-                      fontSize: '0.85rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.05em',
-                      border: enrolled ? '2px solid #16a34a' : '2px solid #111',
-                      boxShadow: enrolled ? 'none' : '4px 4px 0px 0px rgba(0,0,0,0.9)',
-                      backgroundColor: enrolled ? '#22c55e' : '#06BBCC',
-                      color: '#ffffff',
-                      cursor: enrolled ? 'default' : 'pointer',
-                      transition: 'all 0.15s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                    }}
+                    onClick={enrolled ? handleCancelEnrollment : handleEnroll}
+                    disabled={isEnrolling}
+                    className={`w-full h-16 text-xs font-black uppercase tracking-widest border-4 border-black transition-all flex items-center justify-center gap-2 shadow-none ${
+                      enrolled 
+                        ? 'bg-white text-red-600 hover:bg-red-100' 
+                        : 'bg-[#06BBCC] text-black hover:bg-black hover:text-white'
+                    }`}
                   >
                     {isEnrolling ? (
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span
-                          style={{
-                            width: 16, height: 16,
-                            border: '2px solid #ffffff',
-                            borderTopColor: 'transparent',
-                            borderRadius: '50%',
-                            display: 'inline-block',
-                            animation: 'spin 0.7s linear infinite',
-                          }}
-                        />
-                        Enrolling...
-                      </span>
+                      <span>PROCESSING...</span>
                     ) : enrolled ? (
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#fff' }}>
-                        <CheckCircle2 size={18} color="#fff" />
-                        {t('courseDetail.alreadyEnrolled', 'ENROLLED ✓')}
-                      </span>
+                      <span>❌ CANCEL ENROLLMENT</span>
                     ) : (
-                      t('courseDetail.enrollNow', "ENROLL NOW — IT'S FREE")
+                      <span>⚡ ENROLL NOW — IT'S FREE</span>
                     )}
                   </button>
 
-                  {/* Perks */}
-                  <div className="space-y-5 pt-6 border-t border-gray-100">
+                  <div className="space-y-4 pt-4">
                     {[
-                      { icon: <Clock size={16} className="text-[#06BBCC]" />, label: t('courseDetail.lifetime', 'Lifetime Access') },
-                      { icon: <BookOpen size={16} className="text-[#06BBCC]" />, label: `48 ${t('courseDetail.lessons', 'Lessons')}` },
-                      { icon: <Award size={16} className="text-[#06BBCC]" />, label: t('courseDetail.certificate', 'Certificate of Completion') },
+                      { icon: <Clock size={16} />, label: t('courseDetail.lifetime', 'Lifetime Access') },
+                      { icon: <BookOpen size={16} />, label: `48 Custom Full ${t('courseDetail.lessons', 'Lessons')}` },
+                      { icon: <Award size={16} />, label: t('courseDetail.certificate', 'Certificate of Completion') },
                     ].map(({ icon, label }) => (
-                      <div key={label} className="flex items-center gap-3 text-gray-700 text-sm font-medium">
-                        {icon}
+                      <div key={label} className="flex items-center gap-3 text-black text-xs font-black uppercase tracking-tight">
+                        <div className="w-6 h-6 border-2 border-black flex items-center justify-center bg-gray-50 shrink-0">
+                          {icon}
+                        </div>
                         <span>{label}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-
-              {/* Category chip */}
-              <div className="bg-gray-900 p-5 border-2 border-gray-900 shadow-[6px_6px_0px_0px_rgba(6,187,204,0.25)]">
-                <h4 className="text-xs font-bold mb-3 uppercase tracking-widest text-gray-400">
-                  {t('courseDetail.category', 'Category')}
-                </h4>
-                <div className="inline-block bg-[#06BBCC] text-white px-5 py-2 font-bold text-xs tracking-widest border border-white/20">
-                  {course.danhMucKhoaHoc.tenDanhMucKhoaHoc.toUpperCase()}
-                </div>
-              </div>
-
             </div>
           </div>
 

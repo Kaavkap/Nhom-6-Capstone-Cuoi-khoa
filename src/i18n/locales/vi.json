@@ -73,5 +73,23 @@
     "your_email": "EMAIL",
     "your_message": "NỘI DUNG",
     "send_btn": "GỬI TIN NHẮN"
+  },
+  "profile": {
+    "title": "Hồ Sơ Cá Nhân",
+    "accountLabel": "Tài Khoản",
+    "options": "Tùy Chọn Tài Khoản",
+    "personalInfo": "Thông Tin Cá Nhân",
+    "myCourses": "Khóa Học Của Tôi",
+    "editHeading": "Chỉnh Sửa Thông Tin Tài Khoản",
+    "username": "Tài Khoản (Cố Định)",
+    "password": "Mật Khẩu Mới",
+    "fullName": "Họ và Tên",
+    "phone": "Số Điện Thoại",
+    "email": "Địa Chỉ Email",
+    "saveButton": "Cập Nhật Thông Tin",
+    "enrolledHeading": "Danh Sách Khóa Học Đã Ghi Danh",
+    "statusEnrolled": "Đã Ghi Danh",
+    "noCourses": "Bạn chưa tham gia khóa học nào.",
+    "updateSuccess": "CẬP NHẬT THÔNG TIN TÀI KHOẢN THÀNH CÔNG!"
   }
 }

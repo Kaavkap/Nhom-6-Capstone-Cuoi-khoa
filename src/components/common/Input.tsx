@@ -23,7 +23,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="min-w-0 space-y-1.5">
         {label && (
-          <label className="text-xs font-bold text-gray-700 uppercase tracking-wider ml-1">
+          <label className="text-xs font-black text-black uppercase tracking-widest ml-1 mb-2 block">
             {label}
           </label>
         )}
@@ -32,8 +32,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             type={inputType}
             className={cn(
-              'flex h-10 rounded-lg border border-gray-300 bg-white/60 px-4 py-2 text-sm transition-all duration-200 outline-none placeholder:text-gray-400 focus:bg-white/90 focus:border-[#06BBCC] focus:ring-4 focus:ring-[#06BBCC]/10',
-              error && 'border-red-400 focus:border-red-500 focus:ring-red-500/10',
+              'flex h-12 w-full rounded-none border-4 border-black bg-white px-4 py-3 text-xs font-black transition-all duration-200 outline-none placeholder:text-gray-400 placeholder:font-bold focus:bg-gray-50 shadow-none focus:shadow-none',
+              error && 'border-red-500 bg-red-50',
               isPassword && 'pr-11',
               className
             )}

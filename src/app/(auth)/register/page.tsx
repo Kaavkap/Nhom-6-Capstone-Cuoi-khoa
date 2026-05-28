@@ -88,7 +88,7 @@ export default function RegisterPage() {
 
         <div className="glass-card w-full p-10 sm:p-12">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-2 tracking-tight">
+            <h2 className="text-3xl font-black text-black mb-3 tracking-tighter uppercase">
               Join Us
             </h2>
             <p className="text-gray-500 text-sm">
@@ -157,7 +157,7 @@ export default function RegisterPage() {
             <div className="pt-6 px-4">
               <Button
                 type="submit"
-                className="w-full py-6 text-base rounded-xl font-bold shadow-lg shadow-[#06BBCC]/20"
+                className="w-full"
                 isLoading={isLoading}
               >
                 Create Account

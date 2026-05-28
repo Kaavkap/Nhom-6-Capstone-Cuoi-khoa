@@ -40,6 +40,24 @@ const courseService = {
     });
     return response.data;
   },
+
+  cancelEnrollment: async (maKhoaHoc: string, taiKhoan: string): Promise<any> => {
+    const response = await apiInstance.post('/QuanLyKhoaHoc/HuyGhiDanh', {
+      maKhoaHoc,
+      taiKhoan,
+    });
+    return response.data;
+  },
+
+  getCategories: async (): Promise<any> => {
+    const response = await apiInstance.get('/QuanLyKhoaHoc/LayDanhMucKhoaHoc');
+    return response.data;
+  },
+
+  getCoursesByCategory: async (categoryId: string): Promise<any> => {
+    const response = await apiInstance.get(`/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${categoryId}&MaNhom=GP01`);
+    return response.data;
+  },
 };
 
 export default courseService;
