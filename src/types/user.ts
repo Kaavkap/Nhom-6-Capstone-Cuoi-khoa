@@ -18,6 +18,29 @@ export interface UserRegister extends UserLogin {
   email: string;
   soDT: string;
   maNhom: string;
+  maLoaiNguoiDung: string;
+}
+
+export interface EnrolledCourse {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+  hinhAnh: string;
+  moTa: string;
+}
+
+export interface UserProfile extends User {
+  matKhau: string;
+  chiTietKhoaHocGhiDanh: EnrolledCourse[];
+}
+
+export interface UpdateProfilePayload {
+  taiKhoan: string;
+  matKhau: string;
+  hoTen: string;
+  soDT: string;
+  maLoaiNguoiDung: string;
+  maNhom: string;
+  email: string;
 }
 
 export enum UserType {

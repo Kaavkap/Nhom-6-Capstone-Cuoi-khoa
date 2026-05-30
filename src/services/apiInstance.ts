@@ -39,8 +39,14 @@ apiInstance.interceptors.response.use(
         window.location.href = '/login';
       }
 
-      // Global error toast message (can be expanded later with a toast library)
-      console.error(`API Error [${status}]:`, error.response.data);
+      // Avoid noisy dev overlay for expected client errors like 403.
+      if (status >= 500) {
+        console.error(`API Error [${status}]:`, error.response.data);
+      } else if (status === 401 || status === 403) {
+        console.warn(`API Access [${status}]`, error.response.data);
+      } else {
+        console.warn(`API Error [${status}]`, error.response.data);
+      }
     } else {
       console.error('Network Error:', error.message);
     }

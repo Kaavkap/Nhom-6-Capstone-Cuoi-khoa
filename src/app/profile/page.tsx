@@ -1,19 +1,24 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { userService } from '@/services/userService';
-import { CheckCircle2, User, BookOpen } from 'lucide-react';
+import useAuthStore from '@/store/useAuthStore';
+import { UpdateProfilePayload, UserProfile } from '@/types/user';
 
 export default function ProfilePage() {
+    const router = useRouter();
     const { t } = useTranslation();
-    const [profileData, setProfileData] = useState<any>(null);
+    const { currentUser, accessToken } = useAuthStore();
+    const [profileData, setProfileData] = useState<UserProfile | null>(null);
     const [activeTab, setActiveTab] = useState<'info' | 'courses'>('info');
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<UpdateProfilePayload>({
         taiKhoan: '',
         matKhau: '',
         hoTen: '',
@@ -23,11 +28,7 @@ export default function ProfilePage() {
         email: ''
     });
 
-    useEffect(() => {
-        fetchUserProfile();
-    }, []);
-
-    const fetchUserProfile = async () => {
+    const fetchUserProfile = useCallback(async () => {
         setIsLoading(true);
         try {
             const data = await userService.getProfile();
@@ -43,10 +44,23 @@ export default function ProfilePage() {
             });
         } catch (err) {
             console.error("Error loading profile:", err);
+            router.replace('/login');
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        if (!currentUser || !accessToken) {
+            router.replace('/login');
+            return;
+        }
+        const timer = setTimeout(() => {
+            void fetchUserProfile();
+        }, 0);
+
+        return () => clearTimeout(timer);
+    }, [currentUser, accessToken, router, fetchUserProfile]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -61,23 +75,26 @@ export default function ProfilePage() {
             await userService.updateProfile(formData);
             setMessage({ type: 'success', text: t('profile.updateSuccess', 'CẬP NHẬT THÔNG TIN TÀI KHOẢN THÀNH CÔNG!') });
             await fetchUserProfile();
-        } catch (err: any) {
-            setMessage({ type: 'error', text: err?.response?.data || 'CẬP NHẬT THẤT BẠI.' });
+        } catch (err: unknown) {
+            const errorText = (err as { response?: { data?: string } })?.response?.data || 'CẬP NHẬT THẤT BẠI.';
+            setMessage({ type: 'error', text: errorText });
         } finally {
             setIsUpdating(false);
         }
     };
 
     const handleCancelEnrollment = async (courseId: string) => {
+        if (!profileData) return;
         setIsLoading(true);
         try {
             const { default: courseService } = await import('@/services/courseService');
             await courseService.cancelEnrollment(courseId, profileData.taiKhoan);
             setMessage({ type: 'success', text: 'Hủy đăng ký khóa học thành công!' });
             await fetchUserProfile(); // Refresh list after cancel
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Error cancelling enrollment:', err);
-            setMessage({ type: 'error', text: err?.response?.data || 'Hủy đăng ký thất bại.' });
+            const errorText = (err as { response?: { data?: string } })?.response?.data || 'Hủy đăng ký thất bại.';
+            setMessage({ type: 'error', text: errorText });
             setIsLoading(false);
         }
     };
@@ -227,17 +244,19 @@ export default function ProfilePage() {
 
                             {profileData?.chiTietKhoaHocGhiDanh && profileData.chiTietKhoaHocGhiDanh.length > 0 ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    {profileData.chiTietKhoaHocGhiDanh.map((course: any) => (
+                                    {profileData.chiTietKhoaHocGhiDanh.map((course: UserProfile['chiTietKhoaHocGhiDanh'][number]) => (
                                         <div
                                             key={course.maKhoaHoc}
                                             className="border-4 border-black p-6 flex flex-col justify-between shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] bg-white"
                                         >
                                             <div>
                                                 <div className="w-full aspect-video relative border-4 border-black mb-4 bg-gray-100 overflow-hidden">
-                                                    <img
+                                                    <Image
                                                         src={course.hinhAnh || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80'}
                                                         alt={course.tenKhoaHoc}
-                                                        className="w-full h-full object-cover"
+                                                        fill
+                                                        unoptimized
+                                                        className="object-cover"
                                                     />
                                                 </div>
                                                 <h4 className="text-xs font-black uppercase tracking-tight text-black line-clamp-1 mb-2">
@@ -254,7 +273,7 @@ export default function ProfilePage() {
                                                         {t('profile.statusEnrolled', 'ĐÃ GHI DANH')}
                                                     </span>
                                                 </div>
-                                                <button 
+                                                <button
                                                     onClick={() => handleCancelEnrollment(course.maKhoaHoc)}
                                                     className="text-[10px] border-2 border-black bg-white text-red-600 hover:bg-red-50 hover:border-red-600 font-black px-3 py-1 uppercase tracking-wider transition-all"
                                                 >

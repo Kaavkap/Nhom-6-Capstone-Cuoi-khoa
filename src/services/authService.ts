@@ -7,9 +7,9 @@ const authService = {
     return response.data;
   },
 
-  register: async (registerData: UserRegister): Promise<any> => {
+  register: async (registerData: UserRegister): Promise<UserRegister> => {
     console.log("Payload sent:", registerData);
-    const response = await apiInstance.post('/QuanLyNguoiDung/DangKy', registerData);
+    const response = await apiInstance.post<UserRegister>('/QuanLyNguoiDung/DangKy', registerData);
     return response.data;
   },
 };

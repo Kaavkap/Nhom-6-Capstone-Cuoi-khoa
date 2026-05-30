@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import courseService from '@/services/courseService';
 import CourseCard from '@/components/common/CourseCard';
+import { Course, CourseCategory } from '@/types/course';
 
 export default function CoursesPage() {
   return (
@@ -17,10 +18,22 @@ function CoursesPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search')?.toLowerCase() || '';
 
-  const [categories, setCategories] = useState<any[]>([]);
-  const [courses, setCourses] = useState<any[]>([]);
+  const [categories, setCategories] = useState<CourseCategory[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  async function loadAllCourses() {
+    setIsLoading(true);
+    try {
+      const data = await courseService.getCourseList();
+      setCourses(data);
+    } catch (err) {
+      console.error("Error loading all courses:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   // Load categories and initial courses catalog
   useEffect(() => {
@@ -36,18 +49,6 @@ function CoursesPageContent() {
     initData();
   }, []);
 
-  const loadAllCourses = async () => {
-    setIsLoading(true);
-    try {
-      const data = await courseService.getCourseList();
-      setCourses(data);
-    } catch (err) {
-      console.error("Error loading all courses:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   // Handle Category Filter Selection
   const handleCategoryClick = async (id: string) => {
     setActiveCategory(id);
@@ -58,7 +59,7 @@ function CoursesPageContent() {
       } else {
         const data = await courseService.getCoursesByCategory(id);
 
-        const normalizedData = (data || []).map((course: any) => ({
+        const normalizedData: Course[] = (data || []).map((course: Course) => ({
           ...course,
           tenKhoaHoc: course.tenKhoaHoc,
           moTa: course.moTa || "Chưa có mô tả chi tiết cho khóa học này.",
@@ -106,7 +107,7 @@ function CoursesPageContent() {
             </button>
 
             {/* DYNAMIC CATEGORY OPTION CARDS */}
-            {categories.map((cat: any) => (
+            {categories.map((cat) => (
               <button
                 key={cat.maDanhMuc}
                 onClick={() => handleCategoryClick(cat.maDanhMuc)}
@@ -130,7 +131,7 @@ function CoursesPageContent() {
           ) : (
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredCourses.map((course: any) => (
+                {filteredCourses.map((course) => (
                   <CourseCard key={course.maKhoaHoc} course={course} />
                 ))}
               </div>

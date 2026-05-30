@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import authService from '@/services/authService';
+import { UserRegister } from '@/types/user';
 
 const registerSchema = z.object({
   taiKhoan: z.string().min(1, 'Username is required'),
@@ -48,12 +49,13 @@ export default function RegisterPage() {
     setError(null);
     try {
       // Map fields exactly as required by API
-      const payload = {
+      const payload: UserRegister = {
         taiKhoan: data.taiKhoan,
         matKhau: data.matKhau,
         hoTen: data.hoTen,
         soDT: data.soDT,
         maNhom: "GP01", // Strict mapping
+        maLoaiNguoiDung: "HV",
         email: data.email
       };
       await authService.register(payload);

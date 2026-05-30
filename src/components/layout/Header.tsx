@@ -10,7 +10,6 @@ import {
   Bell,
   LogOut,
   ChevronDown,
-  BookOpen,
   UserCircle,
   Languages
 } from 'lucide-react';
@@ -54,11 +53,16 @@ export default function Header() {
     i18n.changeLanguage(newLang);
   };
 
+  const canAccessAdmin = currentUser?.maLoaiNguoiDung === 'GV';
+
   const navLinks = [
     { name: t('header.home'), href: '/' },
     { name: t('header.courses'), href: '/courses' },
     { name: t('header.about'), href: '/about' },
     { name: t('header.contact'), href: '/contact' },
+    ...(canAccessAdmin
+      ? [{ name: 'ADMIN', href: '/admin' }]
+      : []),
   ];
 
   return (
@@ -80,14 +84,14 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation - Task 13 Active State */}
-          <nav className="hidden xl:flex items-center rounded-none h-14 ml-12">
+          <nav className="hidden xl:flex items-center rounded-none h-14 ml-8">
             {navLinks.map((link, index) => {
               const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href));
               return (
                 <React.Fragment key={link.name}>
                   <Link
                     href={link.href}
-                    className={`text-base font-black transition-colors relative group px-12 flex items-center h-full uppercase tracking-tighter whitespace-nowrap ${isActive ? 'text-[#06BBCC]' : 'text-gray-800 hover:text-[#06BBCC]'
+                    className={`text-base font-black transition-colors relative group px-5 2xl:px-8 flex items-center h-full uppercase tracking-tighter whitespace-nowrap ${isActive ? 'text-[#06BBCC]' : 'text-gray-800 hover:text-[#06BBCC]'
                       }`}
                   >
                     {link.name}
@@ -95,7 +99,7 @@ export default function Header() {
                       }`}></span>
                   </Link>
                   {index < navLinks.length - 1 && (
-                    <div className="w-[80px] h-6"></div>
+                    <div className="w-4 2xl:w-8 h-6"></div>
                   )}
                 </React.Fragment>
               );
@@ -103,10 +107,10 @@ export default function Header() {
           </nav>
 
           {/* Search & Icons & Auth */}
-          <div className="hidden lg:flex items-center">
+          <div className="hidden lg:flex items-center gap-3 xl:gap-5 ml-auto">
 
             {/* Refined Search Bar - Task 11 */}
-            <div className="relative group hidden xl:block mr-12">
+            <div className="relative group hidden xl:block w-[190px] 2xl:w-[250px]">
               <input
                 type="text"
                 value={searchKeyword}
@@ -117,30 +121,30 @@ export default function Header() {
                     router.push(`/courses${query ? `?search=${encodeURIComponent(query)}` : ''}`);
                   }
                 }}
-                className="peer pl-12 pr-4 py-3 w-[250px] bg-gray-50 border-2 border-gray-200 rounded-none text-base font-black transition-all focus:ring-0 focus:border-[#06BBCC] outline-none"
+                className="peer pl-12 pr-4 py-3 w-full bg-gray-50 border-2 border-gray-200 rounded-none text-base font-black transition-all focus:ring-0 focus:border-[#06BBCC] outline-none"
                 placeholder="Search course"
               />
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#06BBCC] peer-focus:hidden" />
             </div>
 
             {/* Icons & Lang Switcher */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 xl:gap-3 pl-3 border-l border-gray-200">
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-2 px-6 py-3 text-[#333] font-black hover:bg-gray-50 transition-all uppercase text-sm border-2 border-gray-200 rounded-none"
+                className="flex items-center gap-1.5 px-3 xl:px-4 py-2.5 text-[#333] font-black hover:bg-gray-50 transition-all uppercase text-sm border-2 border-gray-200 rounded-none leading-none min-w-[72px] justify-center"
               >
-                <Languages size={20} />
-                {i18n.language}
+                <Languages size={16} />
+                {(i18n.language || 'en').slice(0, 2).toUpperCase()}
               </button>
               <button className="p-3 text-[#333] hover:text-[#06BBCC] hover:bg-gray-50 rounded-none transition-all relative">
-                <Bell size={26} />
+                <Bell size={22} />
                 <span className="absolute top-3 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
               </button>
             </div>
 
             {/* Auth Slot */}
             {currentUser ? (
-              <div className="relative">
+              <div className="relative pl-3 border-l border-gray-200">
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   onBlur={() => setTimeout(() => setIsProfileOpen(false), 200)}
@@ -183,12 +187,12 @@ export default function Header() {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="flex items-center space-x-8">
+              <div className="flex items-center gap-3 xl:gap-5 whitespace-nowrap pl-3 border-l border-gray-200">
                 <Link href="/login">
-                  <span className="text-lg font-bold text-gray-800 hover:text-[#06BBCC] transition-colors cursor-pointer">{t('header.signIn')}</span>
+                  <span className="inline-block px-2 text-base xl:text-lg font-bold text-gray-800 hover:text-[#06BBCC] transition-colors cursor-pointer">{t('header.signIn')}</span>
                 </Link>
                 <Link href="/register">
-                  <Button className="text-lg font-bold px-10 py-4 rounded-none">{t('header.joinNow')}</Button>
+                  <Button className="text-base xl:text-lg font-bold px-6 xl:px-8 py-3 rounded-none">{t('header.joinNow')}</Button>
                 </Link>
               </div>
             )}

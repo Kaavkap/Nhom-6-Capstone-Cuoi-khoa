@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import {
@@ -11,11 +11,11 @@ import {
   Clock,
   BookOpen,
   Award,
-  CheckCircle2,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import courseService from '@/services/courseService';
+import { userService } from '@/services/userService';
 import useAuthStore from '@/store/useAuthStore';
 import { useHasMounted } from '@/hooks/useHasMounted';
 import { useCourseDetail } from '@/hooks/useCourseDetail';
@@ -28,9 +28,31 @@ export default function CourseDetailPage() {
   const { currentUser } = useAuthStore();
   const hasMounted = useHasMounted();
   const { course, loading } = useCourseDetail(id);
+  const courseId = course?.maKhoaHoc;
 
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [enrolled, setEnrolled] = useState(false);
+
+  useEffect(() => {
+    const syncEnrollmentStatus = async () => {
+      if (!currentUser || !courseId) {
+        setEnrolled(false);
+        return;
+      }
+
+      try {
+        const profile = await userService.getProfile();
+        const isAlreadyEnrolled = profile.chiTietKhoaHocGhiDanh?.some(
+          (enrolledCourse) => enrolledCourse.maKhoaHoc === courseId
+        );
+        setEnrolled(Boolean(isAlreadyEnrolled));
+      } catch {
+        setEnrolled(false);
+      }
+    };
+
+    syncEnrollmentStatus();
+  }, [currentUser, courseId]);
 
   const handleEnroll = async () => {
     if (!currentUser) {
@@ -223,8 +245,8 @@ export default function CourseDetailPage() {
                     onClick={enrolled ? handleCancelEnrollment : handleEnroll}
                     disabled={isEnrolling}
                     className={`w-full h-16 text-xs font-black uppercase tracking-widest border-4 border-black transition-all flex items-center justify-center gap-2 shadow-none ${
-                      enrolled 
-                        ? 'bg-white text-red-600 hover:bg-red-100' 
+                      enrolled
+                        ? 'bg-white text-red-600 hover:bg-red-100'
                         : 'bg-[#06BBCC] text-black hover:bg-black hover:text-white'
                     }`}
                   >
@@ -233,7 +255,7 @@ export default function CourseDetailPage() {
                     ) : enrolled ? (
                       <span>❌ CANCEL ENROLLMENT</span>
                     ) : (
-                      <span>⚡ ENROLL NOW — IT'S FREE</span>
+                      <span>⚡ ENROLL NOW — IT&apos;S FREE</span>
                     )}
                   </button>
 
