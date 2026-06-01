@@ -24,6 +24,7 @@ const registerSchema = z.object({
   soDT: z.string()
     .regex(/(84|0[3|5|7|8|9])+([0-9]{8})\b/g, 'Invalid VN phone'),
   maNhom: z.string().min(1, 'Group ID required'),
+  maLoaiNguoiDung: z.enum(['HV', 'GV']),
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
@@ -41,6 +42,7 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       maNhom: 'GP01',
+      maLoaiNguoiDung: 'HV',
     },
   });
 
@@ -55,7 +57,7 @@ export default function RegisterPage() {
         hoTen: data.hoTen,
         soDT: data.soDT,
         maNhom: "GP01", // Strict mapping
-        maLoaiNguoiDung: "HV",
+        maLoaiNguoiDung: data.maLoaiNguoiDung,
         email: data.email
       };
       await authService.register(payload);
@@ -154,6 +156,21 @@ export default function RegisterPage() {
                 {...register('email')}
                 error={errors.email?.message}
               />
+            </div>
+
+            <div className="grid grid-cols-1 gap-2 place-items-center">
+              <div className="w-full min-w-[380px]">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Role (DEMO)
+                </label>
+                <select
+                  {...register('maLoaiNguoiDung')}
+                  className="w-full h-12 px-4 border-2 border-gray-200 bg-white text-base font-bold outline-none focus:border-[#06BBCC]"
+                >
+                  <option value="HV">HV</option>
+                  <option value="GV">GV</option>
+                </select>
+              </div>
             </div>
 
             <div className="pt-6 px-4">
