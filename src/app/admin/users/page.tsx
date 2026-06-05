@@ -258,12 +258,12 @@ export default function AdminUsersPage() {
           <table className="min-w-[980px] text-sm">
             <thead className="bg-black text-white uppercase text-xs tracking-widest sticky top-0 z-10">
               <tr>
-                <th className="text-left px-3 py-3">Tai khoan</th>
-                <th className="text-left px-3 py-3">Ho ten</th>
+                <th className="text-left px-3 py-3">Tài khoản</th>
+                <th className="text-left px-3 py-3">Họ tên</th>
                 <th className="text-left px-3 py-3">Email</th>
-                <th className="text-left px-3 py-3">SDT</th>
-                <th className="text-left px-3 py-3">Loai</th>
-                <th className="text-left px-3 py-3 sticky right-0 bg-black text-white z-20 min-w-[170px] shadow-[-3px_0_0_0_rgba(255,255,255,0.25)]">THAO TAC</th>
+                <th className="text-left px-3 py-3">SĐT</th>
+                <th className="text-left px-3 py-3">Loại</th>
+                <th className="text-left px-3 py-3 sticky right-0 bg-black text-white z-20 min-w-[170px] shadow-[-3px_0_0_0_rgba(255,255,255,0.25)]">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -294,14 +294,14 @@ export default function AdminUsersPage() {
                           className="admin-action-button admin-action-edit focus-visible:outline-none"
                           onClick={() => handleEdit(user)}
                         >
-                          Sua
+                          Sửa
                         </button>
                         <button
                           type="button"
                           className="admin-action-button admin-action-delete focus-visible:outline-none"
                           onClick={() => handleDelete(user.taiKhoan)}
                         >
-                          Xoa
+                          Xóa
                         </button>
                       </div>
                     </td>

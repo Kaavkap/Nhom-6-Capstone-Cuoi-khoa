@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const adminLinks = [
-  { href: '/admin/users', label: 'QUAN LY NGUOI DUNG' },
-  { href: '/admin/courses', label: 'QUAN LY KHOA HOC' },
-  { href: '/admin/enrollments', label: 'QUAN LY GHI DANH' },
+  { href: '/admin/users', label: 'QUẢN LÝ NGƯỜI DÙNG' },
+  { href: '/admin/courses', label: 'QUẢN LÝ KHÓA HỌC' },
+  { href: '/admin/enrollments', label: 'QUẢN LÝ GHI DANH' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -16,9 +16,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="container mx-auto px-6 lg:px-10 py-10 space-y-6">
       <div className="bg-black text-white border-4 border-black px-6 py-7 lg:px-8 lg:py-8 shadow-[10px_10px_0px_0px_#06BBCC]">
-        <h1 className="text-3xl lg:text-5xl font-black uppercase tracking-tight leading-none">ADMIN DASHBOARD</h1>
+        <h1 className="text-3xl lg:text-5xl font-black uppercase tracking-tight leading-none">BẢNG ĐIỀU KHIỂN QUẢN TRỊ</h1>
         <p className="text-sm lg:text-base font-bold uppercase tracking-wider text-gray-300 mt-3">
-          QUAN TRI HE THONG E-LEARNING
+          QUẢN TRỊ HỆ THỐNG E-LEARNING
         </p>
       </div>
 

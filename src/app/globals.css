@@ -36,18 +36,24 @@ body {
 }
 
 .admin-action-edit {
-  background: #fef3c7 !important;
+  background: #ffffff !important;
   color: #111827 !important;
 }
 
 .admin-action-delete {
-  background: #dc2626 !important;
-  border-color: #991b1b !important;
-  color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #111827 !important;
+  color: #111827 !important;
 }
 
-.admin-action-button:hover {
-  background: #7f1d1d !important;
-  border-color: #450a0a !important;
-  color: #ffffff !important;
+.admin-action-edit:hover {
+  background: #ecfdf5 !important;
+  border-color: #22c55e !important;
+  color: #22c55e !important;
+}
+
+.admin-action-delete:hover {
+  background: #fef2f2 !important;
+  border-color: #dc2626 !important;
+  color: #dc2626 !important;
 }

@@ -87,7 +87,7 @@ export default function Home() {
               )}
               <Link href="/admin">
                 <Button variant="outline" className="px-10 py-8 text-xl font-black rounded-none text-white border-white hover:bg-[#06BBCC] hover:text-black border-2">
-                  MANAGE SYSTEM <LayoutDashboard className="ml-3 w-6 h-6" />
+                  QUẢN LÝ HỆ THỐNG <LayoutDashboard className="ml-3 w-6 h-6" />
                 </Button>
               </Link>
               <Link href="/about">
