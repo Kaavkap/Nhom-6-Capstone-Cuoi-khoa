@@ -291,14 +291,14 @@ export default function AdminUsersPage() {
                       <div className="flex gap-2">
                         <button
                           type="button"
-                          className="px-3 py-2 border-4 border-black bg-white text-black text-xs font-black uppercase tracking-widest transition-all hover:bg-red-600 hover:text-white hover:border-red-700 focus-visible:outline-none"
+                          className="admin-action-button admin-action-edit focus-visible:outline-none"
                           onClick={() => handleEdit(user)}
                         >
                           Sua
                         </button>
                         <button
                           type="button"
-                          className="px-3 py-2 border-4 border-red-700 bg-white text-red-600 text-xs font-black uppercase tracking-widest transition-all hover:bg-red-600 hover:text-white hover:border-red-700 focus-visible:outline-none"
+                          className="admin-action-button admin-action-delete focus-visible:outline-none"
                           onClick={() => handleDelete(user.taiKhoan)}
                         >
                           Xoa
