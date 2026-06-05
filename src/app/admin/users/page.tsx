@@ -258,12 +258,12 @@ export default function AdminUsersPage() {
           <table className="min-w-[980px] text-sm">
             <thead className="bg-black text-white uppercase text-xs tracking-widest sticky top-0 z-10">
               <tr>
-                <th className="text-left px-3 py-3 min-w-[170px]">THAO TAC</th>
                 <th className="text-left px-3 py-3">Tai khoan</th>
-                <th className="text-left px-3 py-3">Họ tên</th>
+                <th className="text-left px-3 py-3">Ho ten</th>
                 <th className="text-left px-3 py-3">Email</th>
-                <th className="text-left px-3 py-3">SĐT</th>
-                <th className="text-left px-3 py-3">Loại</th>
+                <th className="text-left px-3 py-3">SDT</th>
+                <th className="text-left px-3 py-3">Loai</th>
+                <th className="text-left px-3 py-3 sticky right-0 bg-black text-white z-20 min-w-[170px] shadow-[-3px_0_0_0_rgba(255,255,255,0.25)]">THAO TAC</th>
               </tr>
             </thead>
             <tbody>
@@ -282,22 +282,21 @@ export default function AdminUsersPage() {
               ) : (
                 tableUsers.map((user) => (
                   <tr key={user.taiKhoan} className="border-t border-black/20">
-                    <td className="px-3 py-3 min-w-[170px] bg-white">
-                      <div className="flex gap-2">
-                        <Button type="button" variant="outline" className="px-3 py-2" onClick={() => handleEdit(user)}>
-                          Sua
-                        </Button>
-                        <Button type="button" className="px-3 py-2 bg-red-500 text-white border-red-700 hover:bg-black" onClick={() => handleDelete(user.taiKhoan)}>
-                          Xoa
-                        </Button>
-                      </div>
-                    </td>
                     <td className="px-3 py-3 font-black">{user.taiKhoan}</td>
                     <td className="px-3 py-3">{user.hoTen}</td>
                     <td className="px-3 py-3">{user.email}</td>
                     <td className="px-3 py-3">{getUserPhone(user)}</td>
                     <td className="px-3 py-3">{user.maLoaiNguoiDung}</td>
-
+                    <td className="px-3 py-3 sticky right-0 bg-white z-10 min-w-[170px] shadow-[-3px_0_0_0_rgba(0,0,0,0.18)]">
+                      <div className="flex gap-2">
+                        <Button type="button" variant="outline" className="px-3 py-2 hover:bg-red-500 hover:text-white hover:border-red-700" onClick={() => handleEdit(user)}>
+                          Sua
+                        </Button>
+                        <Button type="button" className="px-3 py-2 bg-white text-red-600 border-red-700 hover:bg-red-500 hover:text-white" onClick={() => handleDelete(user.taiKhoan)}>
+                          Xoa
+                        </Button>
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}
@@ -309,6 +308,8 @@ export default function AdminUsersPage() {
     </div>
   );
 }
+
+
 
 
 
