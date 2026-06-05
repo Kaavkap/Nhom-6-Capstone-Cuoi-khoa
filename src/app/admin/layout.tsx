@@ -33,7 +33,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               className={`min-h-[60px] px-5 py-4 border-4 border-black text-sm lg:text-base font-black uppercase tracking-wide transition-all flex items-center justify-center text-center ${
                 isActive
                   ? 'bg-[#06BBCC] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
-                  : 'bg-white text-black hover:bg-black hover:text-white'
+                  : 'bg-white text-black hover:bg-[#E8FBFD] hover:text-black hover:shadow-[4px_4px_0px_0px_#06BBCC]'
               }`}
             >
               {link.label}
