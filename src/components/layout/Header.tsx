@@ -53,16 +53,12 @@ export default function Header() {
     i18n.changeLanguage(newLang);
   };
 
-  const canAccessAdmin = currentUser?.maLoaiNguoiDung === 'GV';
-
   const navLinks = [
     { name: t('header.home'), href: '/' },
     { name: t('header.courses'), href: '/courses' },
     { name: t('header.about'), href: '/about' },
     { name: t('header.contact'), href: '/contact' },
-    ...(canAccessAdmin
-      ? [{ name: 'ADMIN', href: '/admin' }]
-      : []),
+    { name: 'ADMIN', href: '/admin' },
   ];
 
   return (

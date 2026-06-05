@@ -10,7 +10,8 @@ import {
   Globe,
   Home as HomeIcon,
   BookOpen,
-  ArrowRight
+  ArrowRight,
+  LayoutDashboard
 } from "lucide-react";
 import Button from "@/components/common/Button";
 import useAuthStore from '@/store/useAuthStore';
@@ -70,18 +71,25 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-6 pt-4">
               {currentUser ? (
-                <Link href="/courses">
-                  <Button className="px-10 py-8 text-xl font-black rounded-none shadow-xl hover:shadow-[#06BBCC]/40">
-                    {t('hero.explore', 'EXPLORE COURSES')} <ArrowRight className="ml-3 w-6 h-6" />
-                  </Button>
-                </Link>
+                <>
+                  <Link href="/courses">
+                    <Button className="px-10 py-8 text-xl font-black rounded-none shadow-xl hover:shadow-[#06BBCC]/40">
+                      {t('hero.explore', 'EXPLORE COURSES')} <ArrowRight className="ml-3 w-6 h-6" />
+                    </Button>
+                  </Link>
+                </>
               ) : (
                 <Link href="/register">
                   <Button className="px-10 py-8 text-xl font-black rounded-none shadow-xl hover:shadow-[#06BBCC]/40">
-                    {t('hero.join', 'JOIN NOW')} <ArrowRight className="ml-3 w-6 h-6" />
-                  </Button>
-                </Link>
+                  {t('hero.join', 'JOIN NOW')} <ArrowRight className="ml-3 w-6 h-6" />
+                </Button>
+              </Link>
               )}
+              <Link href="/admin">
+                <Button variant="outline" className="px-10 py-8 text-xl font-black rounded-none text-white border-white hover:bg-[#06BBCC] hover:text-black border-2">
+                  MANAGE SYSTEM <LayoutDashboard className="ml-3 w-6 h-6" />
+                </Button>
+              </Link>
               <Link href="/about">
                 <Button variant="outline" className="px-10 py-8 text-xl font-black rounded-none text-white border-white hover:bg-white hover:text-gray-900 border-2">
                   {t('hero.readMore', 'READ MORE')}

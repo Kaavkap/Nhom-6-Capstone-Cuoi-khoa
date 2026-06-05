@@ -1,10 +1,8 @@
 ﻿'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import useAuthStore from '@/store/useAuthStore';
-import { useHasMounted } from '@/hooks/useHasMounted';
+import { usePathname } from 'next/navigation';
 
 const adminLinks = [
   { href: '/admin/users', label: 'QUAN LY NGUOI DUNG' },
@@ -12,39 +10,8 @@ const adminLinks = [
   { href: '/admin/enrollments', label: 'QUAN LY GHI DANH' },
 ];
 
-const canAccessAdmin = (currentUser: { maLoaiNguoiDung?: string } | null) => {
-  if (!currentUser) return false;
-  return currentUser.maLoaiNguoiDung === 'GV';
-};
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const hasMounted = useHasMounted();
-  const { currentUser, accessToken } = useAuthStore();
-
-  useEffect(() => {
-    if (!hasMounted) return;
-
-    if (!currentUser || !accessToken) {
-      router.replace('/login');
-      return;
-    }
-
-    if (!canAccessAdmin(currentUser)) {
-      router.replace('/');
-    }
-  }, [hasMounted, currentUser, accessToken, router]);
-
-  if (!hasMounted || !currentUser || !accessToken || !canAccessAdmin(currentUser)) {
-    return (
-      <div className="container mx-auto px-6 lg:px-10 py-24">
-        <div className="border-4 border-black bg-white p-10 text-center font-black text-xs tracking-widest uppercase shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-          Dang xac thuc quyen quan tri...
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="container mx-auto px-6 lg:px-10 py-10 space-y-6">
