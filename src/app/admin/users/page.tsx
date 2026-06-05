@@ -289,12 +289,20 @@ export default function AdminUsersPage() {
                     <td className="px-3 py-3">{user.maLoaiNguoiDung}</td>
                     <td className="px-3 py-3 sticky right-0 bg-white z-10 min-w-[170px] shadow-[-3px_0_0_0_rgba(0,0,0,0.18)]">
                       <div className="flex gap-2">
-                        <Button type="button" variant="outline" className="px-3 py-2 hover:bg-red-500 hover:text-white hover:border-red-700" onClick={() => handleEdit(user)}>
+                        <button
+                          type="button"
+                          className="px-3 py-2 border-4 border-black bg-white text-black text-xs font-black uppercase tracking-widest transition-all hover:bg-red-600 hover:text-white hover:border-red-700 focus-visible:outline-none"
+                          onClick={() => handleEdit(user)}
+                        >
                           Sua
-                        </Button>
-                        <Button type="button" className="px-3 py-2 bg-white text-red-600 border-red-700 hover:bg-red-500 hover:text-white" onClick={() => handleDelete(user.taiKhoan)}>
+                        </button>
+                        <button
+                          type="button"
+                          className="px-3 py-2 border-4 border-red-700 bg-white text-red-600 text-xs font-black uppercase tracking-widest transition-all hover:bg-red-600 hover:text-white hover:border-red-700 focus-visible:outline-none"
+                          onClick={() => handleDelete(user.taiKhoan)}
+                        >
                           Xoa
-                        </Button>
+                        </button>
                       </div>
                     </td>
                   </tr>
