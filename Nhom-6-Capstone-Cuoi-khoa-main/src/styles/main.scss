@@ -1,0 +1,109 @@
+@use 'variables' as *;
+@use 'base' as *;
+
+@import "tailwindcss";
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.auth-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba($primary-color, 0.1) 0%, rgba($primary-color, 0.3) 100%),
+    url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  padding: 1.5rem;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  color: $gray-800;
+
+  h2,
+  p,
+  label {
+    color: $gray-900 !important;
+  }
+
+  input {
+    background: $white;
+    border: 1px solid $gray-300;
+    color: $gray-900;
+    font-size: 0.875rem;
+
+    &::placeholder {
+      color: $gray-400;
+      font-size: 0.8125rem;
+    }
+
+    &:focus {
+      background: $white;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+    }
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: $transition-base;
+  font-size: 0.9375rem;
+
+  &-primary {
+    background: linear-gradient(to right, $primary-color, color-mix(in srgb, $primary-color, white 15%));
+    color: $white;
+    border: none;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba($primary-color, 0.3);
+      filter: brightness(1.05);
+    }
+  }
+
+  &-secondary {
+    background-color: $secondary-color;
+    color: $gray-900;
+
+    &:hover {
+      background-color: color-mix(in srgb, $secondary-color, black 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba($secondary-color, 0.2);
+    }
+  }
+
+  &-outline {
+    border: 2px solid $primary-color;
+    color: $primary-color;
+    background: transparent;
+
+    &:hover {
+      background: $primary-color;
+      color: $white;
+    }
+  }
+}
+
+// Hero Section Gradient Overlay
+.hero-gradient {
+  background: linear-gradient(rgba($black, 0.7), rgba($black, 0.7)),
+    url('https://images.unsplash.com/photo-1524178232363-1fb28f74b0cd?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+}

@@ -1,0 +1,12 @@
+:root {
+  --brand-teal: #06BBCC;
+  --brand-black: #000000;
+  --brand-white: #ffffff;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  background-color: var(--brand-white);
+  color: var(--brand-black);
+}

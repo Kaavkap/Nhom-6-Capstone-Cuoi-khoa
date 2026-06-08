@@ -1,0 +1,92 @@
+{
+  "header": {
+    "home": "Home",
+    "courses": "Courses",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search courses...",
+    "signIn": "Sign In",
+    "joinNow": "Join Now",
+    "profile": "My Profile",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "hero": {
+    "subtitle": "Best Online Courses",
+    "title": "The Best Online Learning Platform",
+    "description": "Join over 100,000+ students learning the most in-demand skills in software development, AI, and design.",
+    "explore": "Explore Courses",
+    "join": "Join Now",
+    "readMore": "Read More"
+  },
+  "courseDetail": {
+    "home": "HOME",
+    "courses": "COURSES",
+    "studentsEnrolled": "Students",
+    "createdBy": "CREATED BY",
+    "overview": "Description",
+    "curriculum": "Curriculum",
+    "free": "FREE",
+    "enrollNow": "ENROLL NOW",
+    "lifetime": "Lifetime Access",
+    "lessons": "Lessons",
+    "certificate": "Certificate",
+    "category": "Category",
+    "enrollSuccess": "Enrolled successfully!",
+    "enrollFail": "Failed to enroll in course",
+    "backToCourses": "BACK TO COURSES",
+    "alreadyEnrolled": "ALREADY ENROLLED"
+  },
+  "home": {
+    "courses_subtitle": "Popular Courses",
+    "viewDetail": "VIEW DETAIL",
+    "students": "Students",
+    "lessonsCount": "Lessons",
+    "viewAll": "VIEW ALL COURSES"
+  },
+  "features": {
+    "skilled_instructors": "Skilled Instructors",
+    "skilled_instructors_desc": "Learn from industry experts with years of practical experience.",
+    "online_classes": "Online Classes",
+    "online_classes_desc": "Access high-quality classes from anywhere in the world, at any time.",
+    "home_projects": "Home Projects",
+    "home_projects_desc": "Build real-world projects that help you master your skills faster.",
+    "book_library": "Book Library",
+    "book_library_desc": "Get unlimited access to a vast library of digital learning resources."
+  },
+  "about": {
+    "title": "About Us",
+    "coming_soon": "COMING SOON",
+    "desc_1": "CyberEdu is the leading platform for technical education in Vietnam. We are currently redesigning this page to give you a better experience.",
+    "desc_2": "Stay tuned for more updates about our vision, our team, and our mission to empower the next generation of developers."
+  },
+  "contact": {
+    "get_in": "Get in",
+    "touch": "Touch",
+    "email_us": "Email Us",
+    "visit_us": "Visit Us",
+    "send_message": "Send a Message",
+    "your_name": "YOUR NAME",
+    "your_email": "YOUR EMAIL",
+    "your_message": "YOUR MESSAGE",
+    "send_btn": "SEND MESSAGE"
+  },
+  "profile": {
+    "title": "Personal Profile",
+    "accountLabel": "Account",
+    "options": "Account Options",
+    "personalInfo": "Personal Information",
+    "myCourses": "My Courses",
+    "editHeading": "Edit Account Information",
+    "username": "Username (Fixed)",
+    "password": "New Password",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "email": "Email Address",
+    "saveButton": "Update Information",
+    "enrolledHeading": "Enrolled Course Directory",
+    "statusEnrolled": "Enrolled",
+    "noCourses": "You have not enrolled in any courses yet.",
+    "updateSuccess": "ACCOUNT INFORMATION UPDATED SUCCESSFULLY!"
+  }
+}
